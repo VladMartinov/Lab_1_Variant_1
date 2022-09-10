@@ -1,66 +1,67 @@
-#include <iostream>
-#include <stdio.h>
-#include <clocale>
+#include <iostream>			//Подключение библиотеки iostream для установление Русской расскладки, метрдов rand и выхода и метода в случае неверных введеных данных
+#include <stdio.h>			//Подклчение библиотеки методов Ввод/Вывод. Но раннее подключена библиотке iostream которая содержит эти методы
 using namespace std;
 
-int processArray(int Array[], unsigned Length, int ArrayResult[], int a, int b ) {
-	for (unsigned i = 0; i < Length; i++) {
-		Array[i] *= (int)(rand() % (-a+b)) + a;
+int processArray(int Array[], unsigned LENGTH, int ArrayResult[], int a, int b ) {
+	srand(0);		//Установка начального начала для rand
+
+	for (unsigned i = 0; i < LENGTH; i++) {					//Инициализация массива начало цикла с i = 0, условие выхода из него когда i <LENGTH
+		Array[i] *= (int)(rand() % (-a+b)) + a;				//Цикл в которов заполняется массив Array случайными числами в веденном диапозоне 
 	}
 
-	unsigned int count = 0;
+	unsigned int count = 0;									//Объявление переменной для записи в нее кол-ва отрицательных чисел 
 
-	for (unsigned i = 0, j = 0; i < Length || i < count - 1; i++) {
-		if (Array[i] < 0) {
-			ArrayResult[j] = Array[i];
-			count++;
-			j++;
+	for (unsigned i = 0, j = 0; i < LENGTH; i++) {			//Инициализация цикла для чтения массива Aray и подсчет отрицательных значений и записи этих значений в результирующий массив
+		if (Array[i] < 0) {									//Есди значение в массиве меньше 0...
+			ArrayResult[j] = Array[i];						//Запись этого значения в результирующий массив
+			count++;										//Увеличение числа записанного в count на 1
+			j++;											//Увеличивыем переменную j используемую для последовательной записи в массив ArrayResult
 		}
 	}
 
-	return count;
+	return count;			//Возврат кол-ва отрицательных чисел
 }
 
-void printArray(int Array[], unsigned Length, int a, int b) {
-	printf("\nВход:\t\t[ ");
-	for (unsigned int i = 0; i < Length; ++i)
-	{
-		printf("%i ", Array[i]);
-	}
-	printf("]\t\ta: %i  b: %i\n", a, b);
-}
+void printArray(int Array[], unsigned LENGTH, int a, int b) {			//метод принимает значение обычного массива, его длинну а так же область радномных чисел 
+	printf("\nВход:\t\t[ ");											//Вывод строки на консть \n - Переход на следующую строку \t - Табуляция
+	for (unsigned int i = 0; i < LENGTH; ++i)							//Цикл для вывода всех элементов массива
 
-void printArrayDouble(int ArrayResult[], unsigned result) {
-	printf("Выход:\t\t[ ");
-	for (unsigned int i = 0; i < result; ++i)
-	{
-		printf("%i ", ArrayResult[i]);
-	}
-	printf("]\t\tcount: %i\n", result);
+		printf("%i ", Array[i]);										//Ввыод всех данных из массива %i - вывод Int значений 
+	
+	printf("]\t\ta: %i  b: %i\n", a, b);								//Вывод в конце строки значений области рандома
+}
+	
+void printArrayDouble(int ArrayResult[], unsigned result) {			//метод принимает значение результирующиего массива и сам результат 
+	printf("Выход:\t\t[ ");											//Вывод строки на консть \n - Переход на следующую строку \t - Табуляция
+	for (unsigned int i = 0; i < result; ++i)						//Цикл для вывода всех элементов массива
+
+		printf("%i ", ArrayResult[i]);								//Ввыод всех данных из массива %i - вывод Int значений 
+	
+	printf("]\t\tcount: %i\n", result);								//Вывод в конце строки результирующего значения
 }
 
 int main() {
-	setlocale(LC_ALL, "Russian");
-	const unsigned int Length = 15;
-	int a, b;
+	setlocale(LC_ALL, "Russian");		//Распознование и корректный вывод русских букв
+	const unsigned int LENGTH = 15;		//Уснатовка в виде положительное константы Длинну масива
+	int a, b;							//Диапозод рандомайзера
 	
-	int Array[Length]{};
-	for (unsigned int i = 0; i < Length; i++) Array[i] = 1;
+	int Array[LENGTH]{};				//Объявлени массива длинной LENGTH и заполненный нулями
+	for (unsigned int i = 0; i < LENGTH; i++) Array[i] = 1;				//Заполняем массив '1'
 
-	int ArrayResult[Length]{ 0 };
+	int ArrayResult[LENGTH]{ 0 };		//Объявляем результирующий массив (все отрицательные числа)
 
-	scanf_s("%i", &a);
-	if (a >= 0) {
-		printf("The number \"a\" must be less than 0!");
-		exit(0);
+	scanf_s("%i", &a);					//Считывание с консоли значение чила INT и запись его в переменную 'a'
+	if (a >= 0) {						//Проверка на отрицательность числа (по заданию оно должно быть отрицательным)
+		printf("The number \"a\" must be less than 0!");		
+		exit(0);						//Завершение программы в случае неверных данных
 	}
-	scanf_s("%i", &b);
+	scanf_s("%i", &b);					//Считывание с консоли значение чила INT и запись его в переменную 'b'		
 
-	srand(0);
+	unsigned int result = processArray(Array, LENGTH, ArrayResult, a, b);			//Вызов функции выполняющую различные действия с массивом (заполнение рандомными числами, поиск отрицательных чисел, запись их в ArrayResult и подсчет этих чисел
 
-	unsigned int result = processArray(Array, Length, ArrayResult, a, b);
+	printArray(Array, LENGTH, a, b);			//Вывод обычного массива и диапозона рандомных чисел
+	printArrayDouble(ArrayResult, result);		//Вывод результирующего массива и результата (кол-во отрицательных чисел)
 
-	printArray(Array, Length, a, b);
-	printArrayDouble(ArrayResult, result);
+	return 0;									//Конец программы
 }
 
