@@ -4,8 +4,8 @@
 
 using namespace std;
 
-
-void initializeArray1D(double* Array1D, unsigned int LENGTH)        //Метод принимающий одномерный массив и его длинну
+//Метод принимающий одномерный массив и его длинну
+void initializeArray1D(double* Array1D, unsigned int LENGTH)      
 {
     for (unsigned int i = 0; i < LENGTH; ++i)
     {
@@ -13,7 +13,8 @@ void initializeArray1D(double* Array1D, unsigned int LENGTH)        //Метод
     }
 }
 
-double** makeArray2D(double* Array1D, unsigned int ROWS, unsigned int COLS)         //Метод принимающий одномерный массив, кол-во строк и столбцов (для инициализации двухмерного массива)
+//Метод принимающий одномерный массив, кол-во строк и столбцов (для инициализации двухмерного массива)
+double** makeArray2D(double* Array1D, unsigned int ROWS, unsigned int COLS)         
 {
     double** Array2D = new double* [ROWS];          // Выделение памяти для двух мерногомассива 
     for (unsigned int i = 0; i < ROWS; ++i)
@@ -34,7 +35,8 @@ double** makeArray2D(double* Array1D, unsigned int ROWS, unsigned int COLS)     
     return Array2D;                                 //Возврат двухмерного массива
 }
 
-void printArray1D(double Array1D[], unsigned LENGTH) {                  //Метод принимающий одномерный массив и его длинну для вывода его на консоль
+//Метод принимающий одномерный массив и его длинну для вывода его на консоль
+void printArray1D(double Array1D[], unsigned LENGTH) {                  
     cout<<"[ ";
     for (unsigned int i = 0; i < LENGTH; ++i)                           
     {
@@ -43,7 +45,8 @@ void printArray1D(double Array1D[], unsigned LENGTH) {                  //Мет
     cout<<"]\n";                                                        //Переход на следующую строку
 }
 
-void printArray2D(double** Array2D, int ROWS, int COLS) {               //Метод принимающий двухмерный массив, его кол-во строк и длинну
+//Метод принимающий двухмерный массив, его кол-во строк и длинну
+void printArray2D(double** Array2D, int ROWS, int COLS) {               
     cout << "\n" << "=>\n";                                             //Разделение одномерого и двухмерного массива в консоли
 
     for (unsigned int i = 0; i < ROWS; ++i)                             //Пробегаемя по строкам
@@ -60,12 +63,14 @@ void printArray2D(double** Array2D, int ROWS, int COLS) {               //Мет
     cout << "  ]\n";                                                    //Завершающая скобка
 }
 
-void freeArray1D(double* Array1D) {             //Метод принимает одномерный массив для его удаления из памяти
+//Метод принимает одномерный массив для его удаления из памяти
+void freeArray1D(double* Array1D) {             
     delete Array1D;                             //Удаление из памяти массива
     Array1D = NULL;                             //Присвоение нулевой ссылки (то есть ничего)
 }
 
-void freeArray2D(double** Array2D, int ROWS) {              //Метод принимающий двухмерный массив для его удаления из памяти
+//Метод принимающий двухмерный массив для его удаления из памяти
+void freeArray2D(double** Array2D, int ROWS) {              
     for (int i = 0; i < ROWS; ++i)
     {
         delete[] *(Array2D + i);                            //Удаление каждой строки двухмерного массива
